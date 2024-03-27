@@ -1,5 +1,7 @@
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { HeroParallax } from "@/components/ui/hero-parallax";
+import { ModeToggle } from "@/components/ui/model-toggle";
+import { Button } from "@/components/ui/button"
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import Image from "next/image";
 export const products = [
@@ -120,6 +122,7 @@ export default function Home() {
 
   return (
     <>
+     <ModeToggle/>
       <ContainerScroll
         titleComponent={
           <>
@@ -129,12 +132,12 @@ export default function Home() {
               </h1>
               <TypewriterEffectSmooth words={words} />
               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
-                <button className="w-40 h-10 rounded-xl bg-black border dark:border-white border-transparent text-white text-sm">
+                <Button className="w-40 h-10 rounded-xl bg-black border dark:border-white border-transparent text-white text-sm">
                   Join now
-                </button>
-                <button className="w-40 h-10 rounded-xl bg-white text-black border border-black  text-sm">
+                </Button>
+                <Button className="w-40 h-10 rounded-xl bg-white text-black border border-black  text-sm">
                   Signup
-                </button>
+                </Button>
               </div>
             </div>
             {/* <h1 className="text-4xl font-semibold text-black dark:text-white mb-20">
