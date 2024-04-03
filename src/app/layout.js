@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Navigation from "@/components/navigation";
+import Navigation from "@/components/header";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,15 +16,20 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider
-         attribute="class"
-         defaultTheme="light"
-         enableSystem
-         disableTransitionOnChange
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
         >
-        <Navigation />
-        {children}
+          <div className="h-full dark:bg-[#1F1F1F]">
+            <Navigation />
+            <main>
+              {children}
+            </main>
+            <Footer />
+          </div>
         </ThemeProvider>
-        </body>
+      </body>
     </html>
   );
 }
