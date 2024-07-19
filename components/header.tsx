@@ -16,7 +16,7 @@ const Header = () => {
             </aside>
             <aside className="flex gap-2 items-center">
                 <Switch
-                    checked={theme == 'dark'}
+                    checked={theme == 'light'}
                     onCheckedChange={toggleTheme} id='toggle-theme'
                     className="bg-gray-200 dark:bg-gray-700"
                 />
