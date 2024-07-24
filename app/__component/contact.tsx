@@ -1,50 +1,52 @@
 "use client";
+import { useState } from "react";
+import confetti from "canvas-confetti";
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-
+import { SendHorizontal } from 'lucide-react';
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input"
-import confetti from "canvas-confetti";
- 
+
 import { Button } from "@/components/ui/button";
 const formSchema = z.object({
     username: z.string().min(2).max(50),
-    email: z.string().min(2).max(50),
-    mobno: z.string().min(2).max(50),
-    message: z.string().min(2).max(50),
+    email: z.string().email(),
+    mobno: z.string().regex(/^\d+$/),
+    message: z.string().min(2).max(1000),
 })
 
 const handleConfetti = () => {
     const end = Date.now() + 3 * 1000; // 3 seconds
     const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
- 
+
     const frame = () => {
-      if (Date.now() > end) return;
- 
-      confetti({
-        particleCount: 2,
-        angle: 60,
-        spread: 55,
-        startVelocity: 60,
-        origin: { x: 0, y: 0.5 },
-        colors: colors,
-      });
-      confetti({
-        particleCount: 2,
-        angle: 120,
-        spread: 55,
-        startVelocity: 60,
-        origin: { x: 1, y: 0.5 },
-        colors: colors,
-      });
- 
-      requestAnimationFrame(frame);
+        if (Date.now() > end) return;
+
+        confetti({
+            particleCount: 2,
+            angle: 60,
+            spread: 55,
+            startVelocity: 60,
+            origin: { x: 0, y: 0.5 },
+            colors: colors,
+        });
+        confetti({
+            particleCount: 2,
+            angle: 120,
+            spread: 55,
+            startVelocity: 60,
+            origin: { x: 1, y: 0.5 },
+            colors: colors,
+        });
+
+        requestAnimationFrame(frame);
     };
- 
+
     frame();
-  };
+};
 export default function Contact() {
+    const [loading, setLoading] = useState<boolean>(false);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -54,17 +56,22 @@ export default function Contact() {
             message: ""
         },
     })
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        setLoading(true)
+        const formData = { ...values};
+        await fetch("https://formspree.io/f/mnnajogb", {
+            method: "POST",
+            body: formData,
+        });
+        handleConfetti();
+        setLoading(false);
     }
 
     return (
         <section className="flex h-full w-full flex-col items-center justify-between py-10">
             <h2 className="text-5xl font-bold ">Get In Touch</h2>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full md:w-1/2 mt-10 text-center">
                     <FormField
                         control={form.control}
                         name="username"
@@ -113,7 +120,7 @@ export default function Contact() {
                             </FormItem>
                         )}
                     />
-                      <Button onClick={handleConfetti}>Trigger Side Cannons</Button>
+                    <Button disabled={loading} type="submit">Submit <SendHorizontal className="ml-2 h-4 w-4"/></Button>
                 </form>
             </Form>
         </section>
