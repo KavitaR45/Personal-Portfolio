@@ -99,5 +99,5 @@ export type Testimonial = {
 export type ContactContent = {
   label: string;
   heading: string;
-  links: { label: string; href: string; solid: boolean }[];
+  links: { label: string; href: string; solid: boolean; download?: string }[];
 };

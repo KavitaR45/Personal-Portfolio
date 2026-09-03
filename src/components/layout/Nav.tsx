@@ -53,6 +53,7 @@ export default function Nav({ links, site }: { links: NavLink[]; site: SiteMeta 
 
           <a
             href={site.resumeHref}
+            download="Kavita-Rawat-Resume.pdf"
             className="inline-flex items-center gap-2 rounded-full bg-ink px-[18px] py-[11px] text-[13px] text-paper transition-transform duration-300 hover:-translate-y-0.5"
           >
             Resume <span aria-hidden="true">↓</span>

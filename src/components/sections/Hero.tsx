@@ -120,7 +120,7 @@ export default function Hero({ hero, photo, name }: { hero: HeroContent; photo: 
         <h1
           data-hero-title
           data-split
-          className="m-0 text-[clamp(52px,10.5vw,172px)] font-black leading-[0.88] tracking-[-0.05em]"
+          className="m-0 text-[clamp(48px,8vw,100px)] font-black leading-[0.88] tracking-[-0.05em]"
           style={{ textWrap: "balance" } as React.CSSProperties}
         >
           {hero.title}

@@ -43,7 +43,7 @@ export default function Contact({ contact, site }: { contact: ContactContent; si
 
         <div data-reveal className="flex flex-wrap justify-center gap-2.5">
           {contact.links.map((l) => (
-            <a
+            <a target="_blank" rel="noopener noreferrer"
               key={l.label}
               href={l.href}
               className={`inline-flex gap-2 rounded-full px-6 py-3.5 text-[14px] font-semibold transition-transform duration-300 hover:-translate-y-[3px] ${

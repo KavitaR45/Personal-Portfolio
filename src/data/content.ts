@@ -19,7 +19,7 @@ export const SITE: SiteMeta = {
     "Front-end developer with 6+ years building fast, expressive interfaces in Next.js, React and motion.",
   email: "kavitarawat1214@gmail.com",
   phone: "+91 7721804979",
-  resumeHref: "#",
+  resumeHref: "/Kavita_Resume.pdf",
   year: "2026",
   photo: "/portfolio.png",
 };
@@ -108,7 +108,7 @@ export const CHAPTERS: Chapter[] = [
     tags: [{ label: "Plasmic", tone: "lilac" }, { label: "Next.js", tone: "rose" }, { label: "React", tone: "sky" }],
   },
   {
-    index: "Chapter 04", kind: "Healthcare / Events", title: "CiNOPSE",
+    index: "Chapter 04", kind: "Healthcare / Events", title: "CINOPSE",
     device: { kind: "laptop", screen: "/images/projects/cinopse.png" },
     motifs: [
       { kind: "glyph",   depth: 0.3,  pos: "left:2vw;bottom:4vh",    size: "clamp(64px,15vw,240px)", tone: "rose", text: "[ ]" },
@@ -220,7 +220,7 @@ export const CONTACT: ContactContent = {
   links: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/kavita-rawat-6492a92a3/", solid: true },
     { label: "GitHub", href: "https://github.com/KavitaR45", solid: true },
-    { label: "Resume", href: SITE.resumeHref, solid: false },
+    { label: "Resume", href: SITE.resumeHref, solid: false, download: "Kavita-Rawat-Resume.pdf" },
   ],
 };
 
