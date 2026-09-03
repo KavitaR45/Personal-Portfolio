@@ -5,7 +5,7 @@ export default function About({ about, step }: { about: AboutContent; step: stri
     <section
       data-panel="about"
       id="about"
-      className="sticky top-0 flex h-screen flex-col overflow-hidden rounded-t-[48px] bg-sun px-[clamp(20px,3vw,40px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(80px,12vh,140px)] text-ink"
+      className="sticky top-0 flex h-screen flex-col overflow-hidden rounded-t-[48px] bg-sun px-[clamp(20px,3vw,40px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(56px,12vh,140px)] text-ink"
     >
       <div
         data-shape="0.4"
@@ -16,7 +16,7 @@ export default function About({ about, step }: { about: AboutContent; step: stri
         {"{ }"}
       </div>
 
-      <div data-inner className="relative flex flex-1 flex-col justify-between gap-8">
+      <div data-inner className="relative flex flex-1 flex-col justify-between gap-5 sm:gap-8">
         <div className="flex justify-between text-[13px] uppercase tracking-[0.14em] opacity-65">
           <span>{about.label}</span>
           <span>{step}</span>
@@ -30,14 +30,14 @@ export default function About({ about, step }: { about: AboutContent; step: stri
           {about.statement}
         </p>
 
-        <div className="grid gap-6 border-t border-ink/20 pt-7 [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
+        <div className="grid grid-cols-3 gap-3 border-t border-ink/20 pt-5 sm:gap-6 sm:pt-7 md:[grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
           {about.stats.map((s) => (
             <div key={s.label} data-reveal className="flex flex-col gap-2">
-              <span className="text-[clamp(36px,4.5vw,64px)] font-black leading-none tracking-[-0.05em] tabular-nums">
+              <span className="text-[clamp(28px,4.5vw,64px)] font-black leading-none tracking-[-0.05em] tabular-nums">
                 <span data-count={s.value}>0</span>
                 {s.suffix}
               </span>
-              <span className="text-[13px] uppercase tracking-[0.1em] opacity-65">{s.label}</span>
+              <span className="text-[10px] uppercase leading-tight tracking-[0.08em] opacity-65 sm:text-[13px] sm:tracking-[0.1em]">{s.label}</span>
             </div>
           ))}
         </div>

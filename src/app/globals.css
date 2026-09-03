@@ -40,6 +40,19 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
+/* A hero shape can declare a phone-only vertical position. Inline styles
+   cannot hold a media query, so the value rides in as a custom property. */
+@media (max-width: 767px) {
+  [data-sm-top] { top: var(--sm-top) !important; }
+}
+
+/* On short handsets the in-flow portrait pushes the headline up under the nav.
+   No single min() can hold 260px at 390x844 and still clear the nav at
+   320x568, so short viewports get an explicit smaller size. */
+@media (max-height: 640px) {
+  [data-portrait] { width: 150px !important; height: 150px !important; }
+}
+
 /* word-split machinery used by the motion layer */
 [data-word] { display: inline-block; will-change: transform; }
 

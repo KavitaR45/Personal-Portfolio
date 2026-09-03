@@ -4,8 +4,8 @@ import type { StackItem } from "@/types/content";
 
 /**
  * The grid must never overflow its panel. Two things guarantee that:
- *  · 18 tiles divide exactly by both column counts — 6 across from `md` up
- *    (3 rows), 3 across below (6 rows) — so no row is ever left ragged
+ *  · 6 across from `md` up gives 3 whole rows for all 18; on phones three
+ *    tools drop out and the remaining 15 sit 3 across in 5 whole rows
  *  · the panel is a fixed 100vh only from `md` up, where 3 rows always fit;
  *    below that it grows with its content instead of clipping.
  */
@@ -25,7 +25,7 @@ export default function TechStack({ stack, step }: { stack: StackItem[]; step: s
         {"</>"}
       </div>
 
-      <div data-inner className="relative flex min-h-0 flex-1 flex-col gap-[clamp(20px,3.5vh,40px)]">
+      <div data-inner className="relative flex min-h-0 flex-1 flex-col gap-[clamp(14px,3.5vh,40px)]">
         <div className="flex justify-between text-[13px] uppercase tracking-[0.14em] opacity-65">
           <span>Tech stack</span>
           <span>{step}</span>
@@ -38,15 +38,15 @@ export default function TechStack({ stack, step }: { stack: StackItem[]; step: s
           Tools I reach for
         </h2>
 
-        <div className="grid min-h-0 flex-1 grid-cols-3 gap-2.5 md:grid-cols-6 md:grid-rows-3 [&>*]:min-h-0">
+        <div className="grid min-h-0 flex-1 grid-cols-3 gap-2.5 md:grid-cols-6 md:gap-2.5 md:grid-rows-3 [&>*]:min-h-0">
           {stack.map((item) => (
             <div
               key={item.label}
               data-reveal
-              className="flex min-h-0 flex-col items-center justify-center gap-3 rounded-[20px] border border-ink/20 p-3 text-center transition-[transform,border-color] duration-300 hover:-translate-y-1.5 hover:-rotate-1 hover:border-ink/45 sm:p-4"
+              className={`flex min-h-0 flex-col items-center justify-center gap-2 rounded-[16px] border border-ink/20 p-2.5 text-center transition-[transform,border-color] duration-300 hover:-translate-y-1.5 hover:-rotate-1 hover:border-ink/45 md:gap-3 md:rounded-[20px] md:p-4 ${item.hideSm ? "hidden md:flex" : ""}`}
             >
               {/* the mark carries the tile — label is support */}
-              <span className="flex h-[clamp(32px,4.6vw,68px)] w-[clamp(32px,4.6vw,68px)] items-center justify-center">
+              <span className="flex h-[clamp(30px,4.6vw,68px)] w-[clamp(30px,4.6vw,68px)] items-center justify-center">
                 {item.custom === "erp" ? (
                   <ErpIcon className="h-full w-full" />
                 ) : item.icon ? (
@@ -61,7 +61,7 @@ export default function TechStack({ stack, step }: { stack: StackItem[]; step: s
                 )}
               </span>
 
-              <span className="text-[clamp(11px,1vw,16px)] font-semibold leading-tight tracking-[-0.01em] opacity-90">
+              <span className="text-[clamp(12px,1vw,16px)] font-semibold leading-tight tracking-[-0.01em] opacity-90">
                 {item.label}
               </span>
             </div>

@@ -17,10 +17,11 @@ export const SITE: SiteMeta = {
   role: "Front-End Developer",
   description:
     "Front-end developer with 6+ years building fast, expressive interfaces in Next.js, React and motion.",
-  email: "hello@kavitarawat.dev",
-  phone: "+91 00000 00000",
+  email: "kavitarawat1214@gmail.com",
+  phone: "+91 7721804979",
   resumeHref: "#",
   year: "2026",
+  photo: "/portfolio.png",
 };
 
 export const NAV: NavLink[] = [
@@ -42,17 +43,12 @@ export const HERO: HeroContent = {
   shapes: [
     { kind: "circle", depth: 0.3, tone: "rose", size: "clamp(70px,9vw,140px)", pos: "left:8vw;top:18vh" },
     {
-      kind: "code", depth: 0.5, pos: "left:6vw;top:44vh", rotate: -6, dark: true,
+      kind: "code", depth: 0.5, pos: "left:6vw;top:44vh", rotate: -6, dark: true, hideSm: true,
       parts: [{ text: "const", color: "#C8D8F4" }, { text: " craft = " }, { text: "'pixel-perfect'", color: "#F6E27F" }, { text: ";" }],
     },
-    {
-      kind: "code", depth: -0.35, pos: "right:12vw;top:22vh", rotate: 5, dark: false,
-      parts: [{ text: "<" }, { text: "Motion", color: "#3C5FA8" }, { text: " ease=" }, { text: '"expo.out"', color: "#B0578D" }, { text: " />" }],
-    },
-    { kind: "pill", depth: 0.25, tone: "mint", pos: "left:44vw;top:30vh", rotate: -3, text: "60fps" },
+    { kind: "pill", depth: 0.25, tone: "mint", pos: "left:44vw;top:30vh", rotate: -3, text: " shipping-code", hideSm: true },
     { kind: "glyph", depth: -0.45, text: "{ }", pos: "right:34vw;top:8vh", size: "clamp(28px,3.4vw,52px)" },
-    { kind: "ring", depth: -0.5, tone: "sky", size: "clamp(60px,7vw,110px)", pos: "left:34vw;top:12vh" },
-    { kind: "square", depth: 0.6, tone: "mint", size: "clamp(56px,7vw,110px)", pos: "right:24vw;top:40vh" },
+    { kind: "ring", depth: -0.5, tone: "sky", size: "clamp(60px,7vw,110px)", pos: "left:34vw;top:12vh", hideSm: true },
   ],
 };
 
@@ -62,8 +58,8 @@ export const ABOUT: AboutContent = {
     "Six-plus years turning product ideas into fast, expressive interfaces — with motion that means something.",
   stats: [
     { value: 6, suffix: "+", label: "Years of experience" },
-    { value: 20, suffix: "+", label: "Projects delivered" },
-    { value: 12, suffix: "+", label: "Clients worked with" },
+    { value: 30, suffix: "+", label: "Projects delivered" },
+    { value: 15, suffix: "+", label: "Clients worked with" },
   ],
 };
 
@@ -77,42 +73,84 @@ export const ABOUT: AboutContent = {
 export const CHAPTERS: Chapter[] = [
   {
     index: "Chapter 01", kind: "AI / Technology", title: "NetArt AI",
+    motifs: [
+      { kind: "glyph",   depth: 0.3,  pos: "left:2vw;bottom:4vh",    size: "clamp(64px,15vw,240px)", tone: "sky", text: "</>" },
+      { kind: "snippet", depth: -0.4, pos: "left:30vw;top:12vh",   size: "clamp(56px,7vw,120px)", tone: "mint" },
+      { kind: "tag",     depth: 0.5,  pos: "left:6vw;top:30vh",      size: "clamp(9px,0.9vw,13px)", tone: "lilac", text: "<node>" },
+    ],
     tone: "lilac", hosting: "Netlify", href: "https://netartx-ai.netlify.app/", image: null,
+    device: { kind: "laptop", screen: "/images/projects/netart.png" },
     blurb: "An interactive AI experience exploring roles, departments and opportunities across the organization.",
     tags: [{ label: "Next.js", tone: "mint" }, { label: "React", tone: "sky" }, { label: "Claude Code", tone: "rose" }],
   },
   {
     index: "Chapter 02", kind: "Martech / Media", title: "SYNC",
+    device: { kind: "laptop", screen: "/images/projects/sync.png" },
+    motifs: [
+      { kind: "glyph",   depth: 0.3,  pos: "left:2vw;bottom:4vh",    size: "clamp(64px,15vw,240px)", tone: "sky", text: "{ }" },
+      { kind: "dots",    depth: -0.4, pos: "left:30vw;top:13vh",   size: "clamp(9px,1.1vw,18px)", tone: "lilac" },
+      { kind: "tag",     depth: 0.5,  pos: "left:6vw;top:30vh",      size: "clamp(9px,0.9vw,13px)", tone: "mint", text: "<stream>" },
+    ],
     tone: "rose", hosting: "Netlify", href: "https://sync-main.netlify.app/", image: null,
     blurb: "A data-driven media experience connecting audience insights, advertising and digital video.",
     tags: [{ label: "Next.js", tone: "sky" }, { label: "React", tone: "mint" }, { label: "Three.js", tone: "lilac" }],
   },
   {
     index: "Chapter 03", kind: "Growth / Martech", title: "Growth Scraper",
+    device: { kind: "laptop", screen: "/images/projects/growth-scraper.png" },
+    motifs: [
+      { kind: "glyph",   depth: 0.3,  pos: "left:2vw;bottom:4vh",    size: "clamp(64px,15vw,240px)", tone: "rose", text: "=>" },
+      { kind: "snippet", depth: -0.4, pos: "left:30vw;top:12vh",   size: "clamp(56px,7vw,120px)", tone: "lilac" },
+      { kind: "tag",     depth: 0.5,  pos: "left:6vw;top:30vh",      size: "clamp(9px,0.9vw,13px)", tone: "sky", text: "<metrics>" },
+    ],
     tone: "mint", hosting: "Vercel", href: "https://www.growthscraper.com/", image: null,
     blurb: "A growth-focused digital presence bringing strategy, technology and marketing together.",
     tags: [{ label: "Plasmic", tone: "lilac" }, { label: "Next.js", tone: "rose" }, { label: "React", tone: "sky" }],
   },
   {
     index: "Chapter 04", kind: "Healthcare / Events", title: "CiNOPSE",
+    device: { kind: "laptop", screen: "/images/projects/cinopse.png" },
+    motifs: [
+      { kind: "glyph",   depth: 0.3,  pos: "left:2vw;bottom:4vh",    size: "clamp(64px,15vw,240px)", tone: "rose", text: "[ ]" },
+      { kind: "dots",    depth: -0.4, pos: "left:30vw;top:13vh",   size: "clamp(9px,1.1vw,18px)", tone: "mint" },
+      { kind: "tag",     depth: 0.5,  pos: "left:6vw;top:30vh",      size: "clamp(9px,0.9vw,13px)", tone: "sun", text: "<schema>" },
+    ],
     tone: "sky", href: "https://cinopse.in/", image: null,
     blurb: "An event experience connecting medical professionals with sessions, speakers and registration.",
     tags: [{ label: "Next.js", tone: "rose" }, { label: "Firebase", tone: "mint" }, { label: "ERP Integration", tone: "sun" }, { label: "Claude Code", tone: "lilac" }],
   },
   {
     index: "Chapter 05", kind: "Creative / Advertising", title: "3 Monks",
+    device: { kind: "laptop", screen: "/images/projects/3monks.png" },
+    motifs: [
+      { kind: "glyph",   depth: 0.3,  pos: "left:2vw;bottom:4vh",    size: "clamp(64px,15vw,240px)", tone: "sky", text: "#" },
+      { kind: "snippet", depth: -0.4, pos: "left:30vw;top:12vh",   size: "clamp(56px,7vw,120px)", tone: "lilac" },
+      { kind: "tag",     depth: 0.5,  pos: "left:6vw;top:30vh",      size: "clamp(9px,0.9vw,13px)", tone: "rose", text: "<brand>" },
+    ],
     tone: "sun", hosting: "Netlify", href: "https://www.3monks.digital/", image: null,
     blurb: "A bold digital experience showcasing creative, advertising, branding and AI capabilities.",
     tags: [{ label: "Wix", tone: "sky" }],
   },
   {
     index: "Chapter 06", kind: "Fintech / Trading", title: "XTR Edge",
+    device: { kind: "laptop", screen: "/images/projects/xtr-edge.png" },
+    motifs: [
+      { kind: "glyph",   depth: 0.3,  pos: "left:2vw;bottom:4vh",    size: "clamp(64px,15vw,240px)", tone: "rose", text: "( )" },
+      { kind: "dots",    depth: -0.4, pos: "left:30vw;top:13vh",   size: "clamp(9px,1.1vw,18px)", tone: "sun" },
+      { kind: "tag",     depth: 0.5,  pos: "left:6vw;top:30vh",      size: "clamp(9px,0.9vw,13px)", tone: "lilac", text: "<ticker>" },
+    ],
     tone: "aqua", hosting: "Netlify", href: "https://xtr-edge.netlify.app/", image: null,
     blurb: "A modern digital experience presenting financial products and global trading solutions.",
     tags: [{ label: "Plasmic", tone: "rose" }, { label: "Next.js", tone: "lilac" }, { label: "React", tone: "sun" }],
   },
   {
     index: "Chapter 07", kind: "Industrial / Engineering", title: "REMAQ",
+    device: { kind: "laptop", screen: "/images/projects/remaq.png" },
+    motifs: [
+      { kind: "glyph",   depth: 0.3,  pos: "left:2vw;bottom:4vh",    size: "clamp(64px,15vw,240px)", tone: "sky", text: "$_" },
+      { kind: "snippet", depth: -0.4, pos: "left:30vw;top:12vh",   size: "clamp(56px,7vw,120px)", tone: "rose" },
+      { kind: "tag",     depth: 0.5,  pos: "left:6vw;top:30vh",      size: "clamp(9px,0.9vw,13px)", tone: "lilac", text: "<spec>" },
+    ],
     tone: "sage", hosting: "Netlify", href: "https://www.remaq.in/", image: null,
     blurb: "A clean B2B experience showcasing industrial coating solutions and applications.",
     tags: [{ label: "Next.js", tone: "sky" }, { label: "Plasmic", tone: "rose" }, { label: "React", tone: "lilac" }],
@@ -132,14 +170,14 @@ export const STACK: StackItem[] = [
   { label: "Next.js",     icon: "nextjs" },
   { label: "React",       icon: "react" },
   { label: "TypeScript",  icon: "typescript" },
-  { label: "JavaScript",  icon: "js" },
+  { hideSm: true, label: "JavaScript",  icon: "js" },
   { label: "Claude",      icon: "claude" },
   { label: "Codex",       icon: "openai" },
 
   // ── row 2 · tooling, source control, data ──────────────────
   { label: "Postman",     icon: "postman" },
   { label: "GitHub",      icon: "github" },
-  { label: "Git",         icon: "git" },
+  { hideSm: true, label: "Git",         icon: "git" },
   { label: "Netlify",     icon: "netlify" },
   { label: "ERP",         icon: null, custom: "erp" },
   { label: "Supabase",    icon: "supabase" },
@@ -150,7 +188,7 @@ export const STACK: StackItem[] = [
   { label: "Three.js",    icon: "threejs" },
   { label: "WordPress",   icon: "wordpress" },
   { label: "WooCommerce", icon: "woocommerce" },
-  { label: "Vercel",      icon: "vercel" },
+  { hideSm: true, label: "Vercel",      icon: "vercel" },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -180,8 +218,8 @@ export const CONTACT: ContactContent = {
   label: "Get in touch",
   heading: "Let's build something people remember.",
   links: [
-    { label: "LinkedIn", href: "#", solid: true },
-    { label: "GitHub", href: "#", solid: true },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/kavita-rawat-6492a92a3/", solid: true },
+    { label: "GitHub", href: "https://github.com/KavitaR45", solid: true },
     { label: "Resume", href: SITE.resumeHref, solid: false },
   ],
 };

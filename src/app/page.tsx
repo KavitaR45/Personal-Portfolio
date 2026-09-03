@@ -30,7 +30,7 @@ export default function Home() {
       <Nav links={NAV} site={SITE} />
 
       <Mark />
-      <Hero hero={HERO} />
+      <Hero hero={HERO} photo={SITE.photo} name={SITE.name} />
 
       <Mark />
       <About about={ABOUT} step={step(1)} />

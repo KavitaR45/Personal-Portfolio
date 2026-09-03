@@ -1,33 +1,42 @@
+import Image from "next/image";
 import type { HeroContent, HeroShape } from "@/types/content";
 import { HEX } from "@/components/ui/tones";
 
 function Shape({ s }: { s: HeroShape }) {
   const base = `position:absolute;${s.pos}`;
+  const hide = "hideSm" in s && s.hideSm ? "hidden md:block" : "";
 
   if (s.kind === "circle")
-    return <div data-shape={s.depth} style={{ ...styleFrom(base), width: s.size, height: s.size, borderRadius: "50%", background: HEX[s.tone] }} />;
+    return <div data-shape={s.depth} className={hide} style={{ ...styleFrom(base), width: s.size, height: s.size, borderRadius: "50%", background: HEX[s.tone] }} />;
 
   if (s.kind === "ring")
-    return <div data-shape={s.depth} style={{ ...styleFrom(base), width: s.size, height: s.size, borderRadius: "50%", border: `clamp(10px,1.2vw,18px) solid ${HEX[s.tone]}` }} />;
+    return <div data-shape={s.depth} className={hide} style={{ ...styleFrom(base), width: s.size, height: s.size, borderRadius: "50%", border: `clamp(10px,1.2vw,18px) solid ${HEX[s.tone]}` }} />;
 
   if (s.kind === "square")
     return <div data-shape={s.depth} style={{ ...styleFrom(base), width: s.size, height: s.size, borderRadius: "22%", background: HEX[s.tone], transform: "rotate(18deg)" }} />;
 
   if (s.kind === "glyph")
-    return <div data-shape={s.depth} className="font-mono font-medium" style={{ ...styleFrom(base), fontSize: s.size }}>{s.text}</div>;
+    return <div data-shape={s.depth} className={`font-mono font-medium ${hide}`} style={{ ...styleFrom(base), fontSize: s.size }}>{s.text}</div>;
 
   if (s.kind === "pill")
     return (
-      <div data-shape={s.depth} className="flex gap-1.5 rounded-full px-3 py-2 font-mono"
-        style={{ ...styleFrom(base), background: HEX[s.tone], fontSize: "clamp(11px,0.9vw,13px)", transform: `rotate(${s.rotate}deg)` }}>
+      <div
+        data-shape={s.depth}
+        {...(s.topSm ? { "data-sm-top": "" } : {})}
+        className={`flex gap-1.5 rounded-full px-3 py-2 font-mono ${hide}`}
+        style={{ ...styleFrom(base), background: HEX[s.tone], fontSize: "clamp(11px,0.9vw,13px)", transform: `rotate(${s.rotate}deg)`, ...(s.topSm ? { ["--sm-top" as string]: s.topSm } : {}) }}>
         <span aria-hidden="true">●</span><span>{s.text}</span>
       </div>
     );
 
   return (
-    <div data-shape={s.depth} className="rounded-xl px-4 py-2.5 font-mono"
+    <div
+      data-shape={s.depth}
+      {...(s.topSm ? { "data-sm-top": "" } : {})}
+      className={`rounded-xl px-4 py-2.5 font-mono ${hide}`}
       style={{
         ...styleFrom(base),
+        ...(s.topSm ? { ["--sm-top" as string]: s.topSm } : {}),
         fontSize: "clamp(11px,0.9vw,14px)",
         transform: `rotate(${s.rotate}deg)`,
         background: s.dark ? "#15171D" : "#F7F6F1",
@@ -50,7 +59,26 @@ function styleFrom(css: string): React.CSSProperties {
   return out as React.CSSProperties;
 }
 
-export default function Hero({ hero }: { hero: HeroContent }) {
+function Portrait({ src, name, className }: { src: string; name: string; className: string }) {
+  return (
+    <div
+      data-hero-fade
+      data-portrait
+      className={`overflow-hidden rounded-full shadow-[0_18px_44px_rgba(21,23,29,0.2)] ${className}`}
+    >
+      <Image
+        src={src}
+        alt={name}
+        fill
+        priority
+        sizes="(max-width: 768px) 260px, 350px"
+        className="object-cover object-[57%_20%]"
+      />
+    </div>
+  );
+}
+
+export default function Hero({ hero, photo, name }: { hero: HeroContent; photo: string; name: string }) {
   return (
     <section
       data-panel="hero"
@@ -68,7 +96,22 @@ export default function Hero({ hero }: { hero: HeroContent }) {
       />
       {hero.shapes.map((s, i) => <Shape key={i} s={s} />)}
 
+      {/* Desktop: parked in measured free space below the blob. The `vh` top is
+          stepped per breakpoint because the headline is bottom-anchored, so the
+          clear band sits at a different height on each. */}
+      <Portrait
+        src={photo}
+        name={name}
+        className="absolute right-[5.5vw] top-[22vh] z-20 hidden h-[clamp(220px,26vw,350px)] w-[clamp(220px,26vw,350px)] md:block"
+      />
+
       <div className="relative flex flex-col gap-[clamp(20px,3.5vh,40px)] px-[clamp(20px,3vw,40px)]">
+        <Portrait
+          src={photo}
+          name={name}
+          className="relative z-20 mx-auto h-[min(260px,68vw)] w-[min(260px,68vw)] md:hidden"
+        />
+
         <div data-hero-fade className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.14em]">
           <span className="inline-block h-2 w-2 rounded-full bg-ink" />
           <span>{hero.eyebrow}</span>

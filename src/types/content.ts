@@ -15,6 +15,8 @@ export type SiteMeta = {
   phone: string;
   resumeHref: string;
   year: string;
+  /** portrait shown in the hero */
+  photo: string;
 };
 
 export type HeroContent = {
@@ -27,19 +29,34 @@ export type HeroContent = {
 };
 
 export type HeroShape =
-  | { kind: "circle"; depth: number; tone: PanelTone; size: string; pos: string }
-  | { kind: "ring"; depth: number; tone: PanelTone; size: string; pos: string }
+  | { kind: "circle"; depth: number; tone: PanelTone; size: string; pos: string; hideSm?: boolean }
+  | { kind: "ring"; depth: number; tone: PanelTone; size: string; pos: string; hideSm?: boolean }
   | { kind: "square"; depth: number; tone: PanelTone; size: string; pos: string }
-  | { kind: "glyph"; depth: number; text: string; pos: string; size: string }
-  | { kind: "code"; depth: number; pos: string; rotate: number; dark: boolean; parts: CodePart[] }
-  | { kind: "pill"; depth: number; tone: PanelTone; pos: string; rotate: number; text: string };
+  | { kind: "glyph"; depth: number; text: string; pos: string; size: string; hideSm?: boolean }
+  | { kind: "code"; depth: number; pos: string; rotate: number; dark: boolean; parts: CodePart[]; topSm?: string; hideSm?: boolean }
+  | { kind: "pill"; depth: number; tone: PanelTone; pos: string; rotate: number; text: string; topSm?: string; hideSm?: boolean };
 
 export type CodePart = { text: string; color?: string };
+
+/** phone-only `top` override for a hero shape, e.g. "26vh" */
+export type SmTop = { topSm?: string };
 
 export type AboutContent = {
   label: string;
   statement: string;
   stats: { value: number; suffix: string; label: string }[];
+};
+
+export type ChapterMotif = {
+  /** all four read as development furniture, not abstract decoration */
+  kind: "glyph" | "snippet" | "dots" | "tag";
+  /** parallax factor — the scroll layer reads this off `data-shape` */
+  depth: number;
+  /** css shorthand, e.g. "left:4vw;bottom:8vh" */
+  pos: string;
+  size: string;
+  tone?: PanelTone;
+  text?: string;
 };
 
 export type Chapter = {
@@ -54,6 +71,10 @@ export type Chapter = {
   tone: PanelTone;
   /** path under /public, or null to render the placeholder plate */
   image: string | null;
+  /** render a laptop mockup in the media slot instead of the placeholder plate */
+  device?: { kind: "laptop"; screen: string };
+  /** decorative shapes themed to the section; picked up by the parallax layer */
+  motifs?: ChapterMotif[];
 };
 
 export type StackItem = {
@@ -62,6 +83,8 @@ export type StackItem = {
   icon: IconName | null;
   /** project-specific mark drawn in-house, used when `icon` is null */
   custom?: "erp";
+  /** dropped on phones to keep the grid short */
+  hideSm?: boolean;
 };
 
 export type Testimonial = {

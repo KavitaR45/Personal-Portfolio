@@ -27,7 +27,7 @@ export function useSiteMotion(rootRef: RefObject<HTMLDivElement | null>, loaderD
 
     // ── smooth scroll ────────────────────────────────────────────────
     if (!reduce) {
-      lenis = new Lenis({ lerp: 0.075, smoothWheel: true, wheelMultiplier: 0.85 });
+      lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 0.9, syncTouch: true });
       lenis.on("scroll", ScrollTrigger.update);
       const raf = (t: number) => lenis!.raf(t * 1000);
       gsap.ticker.add(raf);
@@ -65,25 +65,38 @@ export function useSiteMotion(rootRef: RefObject<HTMLDivElement | null>, loaderD
 
     const ctx = gsap.context(() => {
       // ── word splitting ─────────────────────────────────────────────
-      const split = (el: HTMLElement) => {
+      /**
+       * Wrap each word so it can be animated independently.
+       *
+       * `masked` adds the overflow clip that hides a word sliding up from
+       * below. It is only wanted where the reveal actually travels a full line
+       * height. A clip box tall enough to clear a heavy face's ascenders and
+       * descenders is TALLER than a tight line advance, so masked words on
+       * tight leading overlap their neighbours and shave each other's ink —
+       * which is exactly what happened to the About statement at leading 1.05.
+       * That statement only fades, so it is split without a mask.
+       */
+      const split = (el: HTMLElement, masked: boolean) => {
         if (el.dataset.splitDone) return;
         const text = el.textContent ?? "";
         el.textContent = "";
         el.setAttribute("aria-label", text.trim());
         text.split(/(\s+)/).forEach((p) => {
           if (!p.trim()) return void el.appendChild(document.createTextNode(" "));
-          const mask = document.createElement("span");
-          mask.style.cssText =
-            "display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:0.1em;margin-bottom:-0.1em";
+          const holder = document.createElement("span");
+          holder.style.cssText = masked
+            ? "display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:0.1em;margin-bottom:-0.1em"
+            : "display:inline-block;vertical-align:top";
           const word = document.createElement("span");
           word.setAttribute("data-word", "");
           word.textContent = p;
-          mask.appendChild(word);
-          el.appendChild(mask);
+          holder.appendChild(word);
+          el.appendChild(holder);
         });
         el.dataset.splitDone = "1";
       };
-      q("[data-split],[data-split-reveal],[data-kinetic]").forEach(split);
+      q("[data-split],[data-split-reveal]").forEach((el) => split(el, true));
+      q("[data-kinetic]").forEach((el) => split(el, false));
 
       const hero = q1("[data-hero]")!;
       const heroTitle = q1("[data-hero-title]")!;
@@ -169,11 +182,14 @@ export function useSiteMotion(rootRef: RefObject<HTMLDivElement | null>, loaderD
       // is before the loader timeline has faded these in, so it would capture
       // opacity 0 and the eyebrow/lead would never come back on scroll-up.
       // fromTo + immediateRender:false pins the correct resting state instead.
+      // No stagger here. With `immediateRender: false` a staggered child that
+      // has not started rendering never receives its from-value, so scrolling
+      // back up returned only the first element and left the rest invisible.
       gsap.fromTo(
         hero.querySelectorAll("[data-hero-title],[data-hero-fade]"),
         { y: 0, opacity: 1 },
         {
-          y: -60, opacity: 0, ease: "power2.in", stagger: 0.03, immediateRender: false,
+          y: -60, opacity: 0, ease: "power2.in", immediateRender: false,
           scrollTrigger: { trigger: markOf(panels[1]), start: "top 90%", end: "top 20%", scrub: 0.4 },
         },
       );
@@ -191,8 +207,11 @@ export function useSiteMotion(rootRef: RefObject<HTMLDivElement | null>, loaderD
         const inner = sec.querySelector("[data-inner]");
         if (inner) gsap.fromTo(inner, { y: 100 }, { y: 0, ease: "none", scrollTrigger: scrub });
 
+        // The media slot deliberately has no scroll tween: the laptop stays put
+        // in the panel and reacts to the pointer only.
         const media = sec.querySelector("[data-media]");
-        if (media) gsap.fromTo(media, { y: 120, rotate: 3 }, { y: 0, rotate: 0, ease: "none", scrollTrigger: scrub });
+        if (media && !media.querySelector("[data-static-media]"))
+          gsap.fromTo(media, { y: 120, rotate: 3 }, { y: 0, rotate: 0, ease: "none", scrollTrigger: scrub });
 
         const img = sec.querySelector("[data-img]");
         if (img) gsap.fromTo(img, { scale: 1.25 }, { scale: 1, ease: "none", scrollTrigger: scrub });
@@ -219,16 +238,22 @@ export function useSiteMotion(rootRef: RefObject<HTMLDivElement | null>, loaderD
         const nextMark = panels[i + 1] ? markOf(panels[i + 1]) : null;
         const textEls = sec.querySelectorAll("[data-split-reveal],[data-reveal],[data-kinetic]");
         if (nextMark && textEls.length)
+          // stagger omitted for the same reason as the hero exit above
           gsap.fromTo(textEls, { y: 0, opacity: 1 }, {
-            y: -60, opacity: 0, ease: "power2.in", stagger: 0.03, immediateRender: false,
+            y: -60, opacity: 0, ease: "power2.in", immediateRender: false,
             scrollTrigger: { trigger: nextMark, start: "top 90%", end: "top 20%", scrub: 0.4 },
           });
 
-        sec.querySelectorAll<HTMLElement>("[data-shape]").forEach((s) => {
-          const d = Number(s.dataset.shape);
-          gsap.fromTo(s, { y: window.innerHeight * d * 0.5 }, {
-            y: -window.innerHeight * d * 0.5, ease: "none",
-            scrollTrigger: { trigger: mark, start: "top bottom", end: "top -100%", scrub: 1 },
+        sec.querySelectorAll<HTMLElement>("[data-shape]").forEach((el) => {
+          const d = Number(el.dataset.shape);
+          // function values + invalidateOnRefresh so a resize re-measures
+          // instead of scrubbing against stale pixel distances
+          gsap.fromTo(el, { y: () => window.innerHeight * d * 0.5 }, {
+            y: () => -window.innerHeight * d * 0.5, ease: "none",
+            scrollTrigger: {
+              trigger: mark, start: "top bottom", end: "top -100%",
+              scrub: 1, invalidateOnRefresh: true,
+            },
           });
         });
       });
