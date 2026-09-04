@@ -5,7 +5,7 @@ export default function Contact({ contact, site }: { contact: ContactContent; si
     <section
       data-panel="contact"
       id="contact"
-      className="relative z-[1] flex min-h-screen flex-col justify-between gap-14 overflow-hidden rounded-t-[48px] bg-rose px-[clamp(20px,3vw,40px)] pb-[clamp(24px,4vh,40px)] pt-[clamp(80px,12vh,140px)] text-ink"
+      className="relative z-[1] flex min-h-svh flex-col justify-between gap-14 overflow-hidden rounded-t-[48px] bg-rose px-[clamp(20px,3vw,40px)] pb-[clamp(24px,4vh,40px)] pt-[clamp(80px,12vh,140px)] text-ink"
     >
       <div data-shape="0.3" className="pointer-events-none absolute select-none font-mono leading-none text-paper"
         style={{ left: "4vw", top: "10vh", fontSize: "clamp(120px,18vw,280px)" }} aria-hidden="true">@</div>
@@ -43,9 +43,11 @@ export default function Contact({ contact, site }: { contact: ContactContent; si
 
         <div data-reveal className="flex flex-wrap justify-center gap-2.5">
           {contact.links.map((l) => (
-            <a target="_blank" rel="noopener noreferrer"
+            <a
               key={l.label}
               href={l.href}
+              download={l.download}
+              {...(l.download ? {} : { target: "_blank", rel: "noopener noreferrer" })}
               className={`inline-flex gap-2 rounded-full px-6 py-3.5 text-[14px] font-semibold transition-transform duration-300 hover:-translate-y-[3px] ${
                 l.solid ? "bg-ink text-paper" : "border-[1.5px] border-ink"
               }`}

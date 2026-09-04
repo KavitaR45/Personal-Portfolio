@@ -84,7 +84,7 @@ export default function Hero({ hero, photo, name }: { hero: HeroContent; photo: 
       data-panel="hero"
       data-hero
       id="top"
-      className="sticky top-0 flex h-screen flex-col justify-end overflow-hidden bg-paper pb-[clamp(20px,3vw,32px)]"
+      className="sticky top-0 flex h-svh flex-col justify-end overflow-hidden bg-paper pb-[clamp(20px,3vw,32px)]"
     >
       <div
         data-blob

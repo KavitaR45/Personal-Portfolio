@@ -14,7 +14,7 @@ export default function TechStack({ stack, step }: { stack: StackItem[]; step: s
     <section
       data-panel="stack"
       id="stack"
-      className="sticky top-0 flex min-h-screen flex-col overflow-hidden rounded-t-[48px] bg-sky px-[clamp(20px,3vw,40px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(80px,12vh,140px)] text-ink md:h-screen md:min-h-0"
+      className="sticky top-0 flex min-h-svh flex-col overflow-hidden rounded-t-[48px] bg-sky px-[clamp(20px,3vw,40px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(80px,12vh,140px)] text-ink md:h-svh md:min-h-0"
     >
       <div
         data-shape="0.35"

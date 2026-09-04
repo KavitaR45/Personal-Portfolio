@@ -14,7 +14,7 @@ export default function Testimonials({
     <section
       data-panel="words"
       id="words"
-      className="sticky top-0 grid h-screen items-center overflow-hidden rounded-t-[48px] bg-paper text-ink"
+      className="sticky top-0 grid h-svh items-center overflow-hidden rounded-t-[48px] bg-paper text-ink"
     >
       <div data-shape="0.3" className="pointer-events-none absolute select-none font-black leading-[0.8] text-sun"
         style={{ left: "6vw", top: "6vh", fontSize: "clamp(220px,34vw,520px)" }} aria-hidden="true">&ldquo;</div>

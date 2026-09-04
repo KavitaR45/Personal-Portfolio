@@ -27,7 +27,17 @@ export function useSiteMotion(rootRef: RefObject<HTMLDivElement | null>, loaderD
 
     // ── smooth scroll ────────────────────────────────────────────────
     if (!reduce) {
-      lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 0.9, syncTouch: true });
+      // `syncTouch` hijacks raw touch events for 1:1 tracking. Lenis's own
+      // handler (dist/lenis.mjs) preventDefaults any touchmove once the
+      // gesture reads as a drag rather than a stationary tap — and a real
+      // finger is never perfectly still, so ordinary taps on nav links and
+      // the mobile menu button were being read as micro-drags and losing
+      // their click. It also drives an exponential inertia curve on
+      // touchend (touchInertiaExponent, default 1.7) that reads as a hard
+      // fling between panels. Leaving it off restores native iOS momentum
+      // scrolling — Lenis still lerps the resulting scroll position for
+      // GSAP/ScrollTrigger, just without intercepting the raw gesture.
+      lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 0.9 });
       lenis.on("scroll", ScrollTrigger.update);
       const raf = (t: number) => lenis!.raf(t * 1000);
       gsap.ticker.add(raf);

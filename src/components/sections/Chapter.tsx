@@ -11,7 +11,7 @@ export default function Chapter({ chapter, id }: { chapter: ChapterType; id?: st
     <article
       data-panel={id ?? slug(chapter.title)}
       id={id}
-      className={`sticky top-0 grid h-screen overflow-hidden rounded-t-[48px] text-ink ${BG[chapter.tone]} [grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))] [grid-template-rows:auto_minmax(0,1fr)] [&>*]:min-h-0 md:[grid-template-rows:minmax(0,1fr)]`}
+      className={`sticky top-0 grid h-svh overflow-hidden rounded-t-[48px] text-ink ${BG[chapter.tone]} [grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))] [grid-template-rows:auto_minmax(0,1fr)] [&>*]:min-h-0 md:[grid-template-rows:minmax(0,1fr)]`}
     >
       {/* behind everything */}
       {chapter.motifs?.map((m, i) => <Motif key={i} m={m} />)}

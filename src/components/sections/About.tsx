@@ -5,7 +5,7 @@ export default function About({ about, step }: { about: AboutContent; step: stri
     <section
       data-panel="about"
       id="about"
-      className="sticky top-0 flex h-screen flex-col overflow-hidden rounded-t-[48px] bg-sun px-[clamp(20px,3vw,40px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(56px,12vh,140px)] text-ink"
+      className="sticky top-0 flex h-svh flex-col overflow-hidden rounded-t-[48px] bg-sun px-[clamp(20px,3vw,40px)] pb-[clamp(32px,5vh,64px)] pt-[clamp(56px,12vh,140px)] text-ink"
     >
       <div
         data-shape="0.4"
